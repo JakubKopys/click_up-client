@@ -1,0 +1,21 @@
+*.gem
+*.rbc
+.ruby-version
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+/.env
+/.github
+.yardoc
+/Gemfile.lock
+tmp
+vendor
+.DS_Store
+
+# rspec failure tracking
+.rspec_status

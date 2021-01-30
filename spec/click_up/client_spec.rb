@@ -18,7 +18,7 @@ RSpec.describe ClickUp::Client do
     end
 
     context "when default_list_id is not provided" do
-      context "and list_id is not passed to #tasks" do
+      context "when list_id is not passed to #tasks" do
         it "raises an ArgumentError" do
           client = described_class.new(api_token: "fake_token")
 
@@ -28,7 +28,7 @@ RSpec.describe ClickUp::Client do
         end
       end
 
-      context "and list_id is passed to #tasks" do
+      context "when list_id is passed to #tasks" do
         it "returns TasksService instance with provided list_id" do
           client = described_class.new(api_token: "fake_token")
 

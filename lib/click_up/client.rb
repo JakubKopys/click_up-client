@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "client/version"
 require_relative "client/http_client"
 require_relative "client/tasks_service"
 

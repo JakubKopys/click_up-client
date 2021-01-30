@@ -8,7 +8,7 @@ RSpec.describe ClickUp::Client do
   describe "#tasks" do
     context "when default_list_id is provided" do
       it "returns TasksService instance with default_list_id" do
-        client = described_class.new(api_token: 'fake_token', default_list_id: 123)
+        client = described_class.new(api_token: "fake_token", default_list_id: 123)
 
         result = client.tasks
 
@@ -20,7 +20,7 @@ RSpec.describe ClickUp::Client do
     context "when default_list_id is not provided" do
       context "and list_id is not passed to #tasks" do
         it "raises an ArgumentError" do
-          client = described_class.new(api_token: 'fake_token')
+          client = described_class.new(api_token: "fake_token")
 
           expect do
             client.tasks
@@ -30,7 +30,7 @@ RSpec.describe ClickUp::Client do
 
       context "and list_id is passed to #tasks" do
         it "returns TasksService instance with provided list_id" do
-          client = described_class.new(api_token: 'fake_token')
+          client = described_class.new(api_token: "fake_token")
 
           result = client.tasks(list_id: 345)
 

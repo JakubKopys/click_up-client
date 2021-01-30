@@ -13,8 +13,8 @@ module ClickUp
         Faraday.new(
           url: CLICK_UP_API_BASE_URL,
           headers: {
-            'Authorization' => api_token,
-            'Accept' => 'application/json',
+            "Authorization" => api_token,
+            "Accept" => "application/json"
           }
         ) do |conn|
           conn.response :logger if ENV["FARADAY_ENABLE_LOGGER"]

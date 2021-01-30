@@ -5,10 +5,10 @@ require "bundler/setup"
 require "dotenv/load"
 require "click_up/client"
 
-API_TOKEN = ENV.fetch('CLICK_UP_API_TOKEN')
-WORKSPACE_ID = ENV.fetch('CLICK_UP_WORKSPACE_ID')
-SPACE_ID = ENV.fetch('CLICK_UP_SPACE_ID')
-DEFAULT_LIST_ID = ENV.fetch('CLICK_UP_DEFAULT_LIST_ID')
+API_TOKEN = ENV.fetch("CLICK_UP_API_TOKEN")
+WORKSPACE_ID = ENV.fetch("CLICK_UP_WORKSPACE_ID")
+SPACE_ID = ENV.fetch("CLICK_UP_SPACE_ID")
+DEFAULT_LIST_ID = ENV.fetch("CLICK_UP_DEFAULT_LIST_ID")
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.

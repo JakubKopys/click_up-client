@@ -104,6 +104,7 @@ Metrics/BlockLength:
     - "spec/factories.rb"
     - "test/factories/*.rb"
     - "spec/factories/*.rb"
+    - "*.gemspec"
 
 Metrics/ClassLength:
   Max: 500

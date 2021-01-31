@@ -12,7 +12,7 @@ RSpec.describe ClickUp::Client do
 
         result = client.tasks
 
-        expect(result).to be_an_instance_of(ClickUp::Client::TasksService)
+        expect(result).to be_an_instance_of(ClickUp::Tasks::Service)
         expect(result.list_id).to eq(123)
       end
     end
@@ -34,7 +34,7 @@ RSpec.describe ClickUp::Client do
 
           result = client.tasks(list_id: 345)
 
-          expect(result).to be_an_instance_of(ClickUp::Client::TasksService)
+          expect(result).to be_an_instance_of(ClickUp::Tasks::Service)
           expect(result.list_id).to eq(345)
         end
       end

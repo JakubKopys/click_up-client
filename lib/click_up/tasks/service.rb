@@ -3,8 +3,8 @@
 require "oj"
 
 module ClickUp
-  class Client
-    class TasksService
+  module Tasks
+    class Service
       attr_reader :list_id
 
       def initialize(http_client:, list_id:)
@@ -20,14 +20,13 @@ module ClickUp
         body = Oj.load(resp.body)
 
         # TODO: return task instances
+        # TODO: return Task Collection
         body.fetch("tasks")
       end
 
       def find(task_id)
         resp = @http_client.get("task/#{task_id}")
-
-        # TODO: return task instance
-        Oj.load(resp.body)
+        Oj.load(resp.body).tap { |task| Task.new(task) }
       end
 
       def delete(task_id)

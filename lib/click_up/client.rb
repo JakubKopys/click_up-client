@@ -2,7 +2,9 @@
 
 require_relative "client/version"
 require_relative "client/http_client"
-require_relative "client/tasks_service"
+require_relative "tasks/service"
+require_relative "tasks/task"
+require_relative "types/base"
 
 module ClickUp
   class Client
@@ -18,7 +20,7 @@ module ClickUp
     def tasks(list_id: @default_list_id)
       raise ArgumentError, "list_id can't be nil when default_list_id was not provided" if list_id.nil?
 
-      ClickUp::Client::TasksService.new(list_id: list_id, http_client: @http_client)
+      ClickUp::Tasks::Service.new(list_id: list_id, http_client: @http_client)
     end
   end
 end

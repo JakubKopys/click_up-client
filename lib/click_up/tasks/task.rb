@@ -18,6 +18,7 @@ module ClickUp
       # TODO-BEGIN: Handle unix timestamp
       attribute :date_created, Types::Base::String
       attribute :date_updated, Types::Base::String.optional
+      attribute :start_date, Types::Base::String.optional
       attribute :date_closed, Types::Base::String.optional
       attribute :due_date, Types::Base::String.optional
       # TODO-END: Handle unix timestamp
@@ -33,6 +34,7 @@ module ClickUp
       attribute :points, Types::Base::Any
       # TODO: define specific type
       attribute :time_estimate, Types::Base::Any
+      attribute :time_spent, Types::Base::Integer
       attribute :custom_fields, Types::Base::Array
       attribute :dependencies, Types::Base::Array
       attribute :linked_tasks, Types::Base::Array
@@ -43,6 +45,8 @@ module ClickUp
       attribute :project, Types::Base::Hash
       attribute :folder, Types::Base::Hash
       attribute :space, Types::Base::Hash
+      attribute :attachments, Types::Base::Array
+      attribute :checklists, Types::Base::Array
     end
   end
 end

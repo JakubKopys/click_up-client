@@ -26,7 +26,7 @@ module ClickUp
 
       def find(task_id)
         resp = @http_client.get("task/#{task_id}")
-        Oj.load(resp.body).tap { |task| Task.new(task) }
+        Oj.load(resp.body).then { |task| Task.new(task) }
       end
 
       def delete(task_id)

@@ -7,11 +7,15 @@ module ClickUp
     class Service
       attr_reader :list_id
 
-      def initialize(http_client:, list_id:)
-        @http_client = http_client
+      # @param list_id [Integer]
+      # @param http_client [#get, #delete, #post, #put, #patch] any object implementing http requests
+      def initialize(list_id:, http_client:)
         @list_id = list_id
+        @http_client = http_client
       end
 
+      # @param archived [Boolean] flag telling whether to fetch only achieved tasks or unarchived ones
+      # @return [ClickUp::Tasks::Collection]
       def all(archived: false)
         url = "list/#{@list_id}/task?archived=#{archived}"
 
@@ -19,16 +23,18 @@ module ClickUp
 
         body = Oj.load(resp.body)
 
-        # TODO: return task instances
-        # TODO: return Task Collection
-        body.fetch("tasks")
+        tasks = body.fetch("tasks")
+        ClickUp::Tasks::Factory.build_collection(tasks)
       end
 
+      # @param task_id [String]
+      # @return [Task]
       def find(task_id)
         resp = @http_client.get("task/#{task_id}")
         Oj.load(resp.body).then { |task| Task.new(task) }
       end
 
+      # @param task_id [String]
       def delete(task_id)
         @http_client.delete("task/#{task_id}")
       end

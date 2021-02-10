@@ -15,26 +15,21 @@ module ClickUp
       attribute :description, Types::Base::String.optional
       attribute :status, Types::Base::Hash
       attribute :orderindex, Types::Base::Strict::String
-      # TODO-BEGIN: Handle unix timestamp
-      attribute :date_created, Types::Base::String
-      attribute :date_updated, Types::Base::String.optional
-      attribute :start_date, Types::Base::String.optional
-      attribute :date_closed, Types::Base::String.optional
-      attribute :due_date, Types::Base::String.optional
-      # TODO-END: Handle unix timestamp
+      attribute :date_created, Types::Base::Coercible::Integer
+      attribute :date_updated, Types::Base::Coercible::Integer.optional
+      attribute :start_date, Types::Base::Coercible::Integer.optional
+      attribute :date_closed, Types::Base::Coercible::Integer.optional
+      attribute :due_date, Types::Base::Coercible::Integer.optional
       attribute :archived, Types::Base::Bool
       attribute :creator, Types::Base::Hash
       attribute :assignees, Types::Base::Array
       attribute :watchers, Types::Base::Array
       attribute :tags, Types::Base::Array
-      # TODO: define specific type
       attribute :parent, Types::Base::Any
-      attribute :priority, Types::Base::Hash
-      # TODO: define specific type
-      attribute :points, Types::Base::Any
-      # TODO: define specific type
-      attribute :time_estimate, Types::Base::Any
-      attribute :time_spent, Types::Base::Integer
+      attribute :priority, Types::Base::Hash.optional
+      attribute :points, Types::Base::Integer.optional
+      attribute :time_estimate, Types::Base::Integer.optional
+      attribute? :time_spent, Types::Base::Integer.optional
       attribute :custom_fields, Types::Base::Array
       attribute :dependencies, Types::Base::Array
       attribute :linked_tasks, Types::Base::Array
@@ -45,7 +40,7 @@ module ClickUp
       attribute :project, Types::Base::Hash
       attribute :folder, Types::Base::Hash
       attribute :space, Types::Base::Hash
-      attribute :attachments, Types::Base::Array
+      attribute? :attachments, Types::Base::Array
       attribute :checklists, Types::Base::Array
     end
   end

@@ -9,7 +9,7 @@ module ClickUp
       transform_keys(&:to_sym)
 
       attribute :id, Types::Base::String
-      attribute :custom_id, Types::Base::String.optional
+      attribute? :custom_id, Types::Base::String.optional
       attribute :name, Types::Base::String
       attribute :text_content, Types::Base::String.optional
       attribute :description, Types::Base::String.optional

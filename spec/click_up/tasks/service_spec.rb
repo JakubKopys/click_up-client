@@ -3,12 +3,14 @@
 require "faker"
 
 RSpec.describe ClickUp::Tasks::Service do
+  include Factories::Task
+
   let(:list_id) { Faker::Number.number }
 
   describe "#all" do
     context "with no params" do
       it "sends a request to fetch all unarchived tasks" do
-        tasks = [{ "id" => "abc" }, { "id" => "def" }]
+        tasks = build_task_list(2).map(&:to_h)
         response = instance_double(Faraday::Response, body: { "tasks" => tasks }.to_json)
         http_client = instance_double(ClickUp::Client::HttpClient, get: response)
         tasks_service = described_class.new(http_client: http_client, list_id: list_id)
@@ -16,13 +18,13 @@ RSpec.describe ClickUp::Tasks::Service do
         result = tasks_service.all
 
         expect(http_client).to have_received(:get).with("list/#{list_id}/task?archived=false")
-        expect(result).to eq(tasks)
+        expect(result.map(&:to_h)).to eq(tasks)
       end
     end
 
     context "with archived: true param" do
       it "sends a request to fetch archived tasks" do
-        tasks = [{ "id" => "abc" }, { "id" => "def" }]
+        tasks = build_task_list(2).map(&:to_h)
         response = instance_double(Faraday::Response, body: { "tasks" => tasks }.to_json)
         http_client = instance_double(ClickUp::Client::HttpClient, get: response)
         tasks_service = described_class.new(http_client: http_client, list_id: list_id)
@@ -30,7 +32,7 @@ RSpec.describe ClickUp::Tasks::Service do
         result = tasks_service.all(archived: true)
 
         expect(http_client).to have_received(:get).with("list/#{list_id}/task?archived=true")
-        expect(result).to eq(tasks)
+        expect(result.map(&:to_h)).to eq(tasks)
       end
     end
   end
@@ -45,8 +47,8 @@ RSpec.describe ClickUp::Tasks::Service do
         "description" => nil,
         "status" => {},
         "orderindex" => "0.91054521075790129000000000000000",
-        "date_created" => "1611940117267",
-        "date_updated" => "1611940117267",
+        "date_created" => 1_611_940_117_267,
+        "date_updated" => 1_611_940_117_267,
         "date_closed" => nil,
         "archived" => false,
         "creator" => { "id" => 123, "username" => "Foo Bar", "color" => "#27AE60", "email" => "foo@bar.com",
@@ -58,7 +60,7 @@ RSpec.describe ClickUp::Tasks::Service do
         "tags" => [],
         "parent" => nil,
         "priority" => { "id" => "2", "priority" => "high", "color" => "#ffcc00", "orderindex" => "2" },
-        "due_date" => "1610593200000",
+        "due_date" => 1_610_593_200_000,
         "start_date" => nil,
         "points" => nil,
         "time_estimate" => nil,

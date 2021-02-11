@@ -22,21 +22,32 @@ module ClickUp
         resp = @http_client.get(url)
 
         body = Oj.load(resp.body)
-
         tasks = body.fetch("tasks")
         ClickUp::Tasks::Factory.build_collection(tasks)
       end
 
       # @param task_id [String]
-      # @return [Task]
+      # @return [ClickUp::Tasks::Task]
       def find(task_id)
         resp = @http_client.get("task/#{task_id}")
+
         Oj.load(resp.body).then { |task| Task.new(task) }
       end
 
       # @param task_id [String]
       def delete(task_id)
         @http_client.delete("task/#{task_id}")
+      end
+
+      # @param attributes [Hash]
+      # @return [ClickUp::Tasks::Task]
+      def create(attributes)
+        url = "list/#{@list_id}/task"
+
+        payload = Oj.dump(attributes, mode: :compat)
+        resp = @http_client.post(url, payload, { "Content-Type" => "application/json" })
+
+        Oj.load(resp.body).then { |task| Task.new(task) }
       end
     end
   end

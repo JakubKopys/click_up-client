@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "oj"
+
 RSpec.describe ClickUp::Tasks::Service do
   include Factories::Task
 
@@ -96,6 +98,23 @@ RSpec.describe ClickUp::Tasks::Service do
       tasks_service.delete("abc")
 
       expect(http_client).to have_received(:delete).with("task/abc")
+    end
+  end
+
+  describe "#create" do
+    it "sends a request to create a task" do
+      task_params = build_task(name: "created_task").to_h
+      response = instance_double(Faraday::Response, body: Oj.generate(task_params))
+      http_client = instance_double(ClickUp::Client::HttpClient, post: response)
+
+      tasks_service = described_class.new(http_client: http_client, list_id: list_id)
+      result = tasks_service.create({ name: "created_task" })
+
+      expected_body = Oj.generate({ name: "created_task" })
+      expect(http_client).to have_received(:post)
+        .with("list/#{list_id}/task", expected_body, { "Content-Type" => "application/json" })
+      expect(result).to be_an_instance_of(ClickUp::Tasks::Task)
+      expect(result.name).to eq("created_task")
     end
   end
 end

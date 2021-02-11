@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "./task"
-require_relative "./collection"
 
 module ClickUp
   module Tasks
@@ -10,8 +9,7 @@ module ClickUp
 
       # @param items [Array] An array of objects containing Task fields
       def build_collection(items)
-        tasks = items.map { |task| Task.new(task) }
-        ClickUp::Tasks::Collection.new(tasks)
+        items.map { |task| Task.new(task) }
       end
     end
   end

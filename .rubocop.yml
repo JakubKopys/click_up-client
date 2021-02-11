@@ -191,7 +191,7 @@ RSpec/MessageSpies:
   Enabled: true
 
 RSpec/MultipleExpectations:
-  Max: 3
+  Max: 6
 
 RSpec/NamedSubject:
   IgnoreSharedExamples: true

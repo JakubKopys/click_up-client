@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "faker"
-
 RSpec.describe ClickUp::Tasks::Service do
   include Factories::Task
 

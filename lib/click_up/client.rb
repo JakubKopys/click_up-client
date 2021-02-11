@@ -4,7 +4,6 @@ require_relative "client/version"
 require_relative "client/http_client"
 require_relative "tasks/service"
 require_relative "tasks/task"
-require_relative "tasks/collection"
 require_relative "tasks/factory"
 require_relative "types/base"
 

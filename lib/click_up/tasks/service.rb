@@ -15,7 +15,7 @@ module ClickUp
       end
 
       # @param archived [Boolean] flag telling whether to fetch only achieved tasks or unarchived ones
-      # @return [ClickUp::Tasks::Collection]
+      # @return [Array<ClickUp::Tasks::Task>]
       def all(archived: false)
         url = "list/#{@list_id}/task?archived=#{archived}"
 

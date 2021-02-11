@@ -49,6 +49,18 @@ module ClickUp
 
         Oj.load(resp.body).then { |task| Task.new(task) }
       end
+
+      # @param task_id [String]
+      # @param attributes [Hash]
+      # @return [ClickUp::Tasks::Task]
+      def update(task_id:, attributes:)
+        url = "task/#{task_id}"
+
+        payload = Oj.dump(attributes, mode: :compat)
+        resp = @http_client.put(url, payload, { "Content-Type" => "application/json" })
+
+        Oj.load(resp.body).then { |task| Task.new(task) }
+      end
     end
   end
 end

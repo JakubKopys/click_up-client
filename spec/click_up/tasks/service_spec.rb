@@ -117,4 +117,21 @@ RSpec.describe ClickUp::Tasks::Service do
       expect(result.name).to eq("created_task")
     end
   end
+
+  describe "#update" do
+    it "sends a request to update a task" do
+      task_params = build_task(name: "updated_task", id: "abc").to_h
+      response = instance_double(Faraday::Response, body: Oj.generate(task_params))
+      http_client = instance_double(ClickUp::Client::HttpClient, put: response)
+
+      tasks_service = described_class.new(http_client: http_client, list_id: list_id)
+      result = tasks_service.update(attributes: { name: "updated_task" }, task_id: "abc")
+
+      expected_body = Oj.generate({ name: "updated_task" })
+      expect(http_client).to have_received(:put)
+        .with("task/abc", expected_body, { "Content-Type" => "application/json" })
+      expect(result).to be_an_instance_of(ClickUp::Tasks::Task)
+      expect(result.name).to eq("updated_task")
+    end
+  end
 end

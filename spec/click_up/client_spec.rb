@@ -5,11 +5,39 @@ RSpec.describe ClickUp::Client do
     expect(ClickUp::Client::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    api_token = ENV.fetch('CLICK_UP_API_TOKEN')
+  describe "#tasks" do
+    context "when default_list_id is provided" do
+      it "returns TasksService instance with default_list_id" do
+        client = described_class.new(api_token: "fake_token", default_list_id: 123)
 
-    client = described_class.new(api_token: api_token)
+        result = client.tasks
 
-    expect(client.api_token).to eq(api_token)
+        expect(result).to be_an_instance_of(ClickUp::Tasks::Service)
+        expect(result.list_id).to eq(123)
+      end
+    end
+
+    context "when default_list_id is not provided" do
+      context "when list_id is not passed to #tasks" do
+        it "raises an ArgumentError" do
+          client = described_class.new(api_token: "fake_token")
+
+          expect do
+            client.tasks
+          end.to raise_error(ArgumentError, "list_id can't be nil when default_list_id was not provided")
+        end
+      end
+
+      context "when list_id is passed to #tasks" do
+        it "returns TasksService instance with provided list_id" do
+          client = described_class.new(api_token: "fake_token")
+
+          result = client.tasks(list_id: 345)
+
+          expect(result).to be_an_instance_of(ClickUp::Tasks::Service)
+          expect(result.list_id).to eq(345)
+        end
+      end
+    end
   end
 end

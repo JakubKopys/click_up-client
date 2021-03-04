@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
-require_relative "./task"
+require_relative "./tag"
 
 module ClickUp
-  module Tasks
+  module Tags
     module Factory
       module_function
 
       # @param items [Array] An array of objects containing Task fields
-      # @return [Array<ClickUp::Tasks::Task>]
+      # @return [Array<ClickUp::Tags::Tag>]
       def build_collection(items)
-        items.map { |task| Task.new(task) }
+        items
+          .map { |tag_hash| tag_hash.transform_keys(&:to_sym) }
+          .map { |tag_hash| Tag.new(tag_hash) }
       end
     end
   end
